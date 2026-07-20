@@ -1,5 +1,3 @@
-Dưới đây là phần giải thích chi tiết đã được lược bỏ đánh số thứ tự:
-
 ## Git Introduction (Giới thiệu về Git)
 
 **Git là gì?**
