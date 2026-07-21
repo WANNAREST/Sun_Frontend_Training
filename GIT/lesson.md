@@ -435,3 +435,419 @@ git push --force-with-lease origin feature/login
 ```
 
 Điểm cốt lõi của flow này là: **không làm việc trực tiếp trên branch chính, luôn cập nhật code mới nhất bằng rebase trước khi tạo hoặc cập nhật Pull Request, và chỉ merge sau khi review đạt yêu cầu.**
+## Case studies
+# Một số thao tác Git thường dùng
+
+## 1. Gộp nhiều commit
+
+Sử dụng Interactive Rebase:
+
+```bash
+git rebase -i HEAD~<số_commit>
+```
+
+Ví dụ, muốn gộp 2 commit gần nhất:
+
+```bash
+git rebase -i HEAD~2
+```
+
+Git sẽ mở trình soạn thảo với nội dung tương tự:
+
+```text
+pick abcd123 Commit message 1
+pick efgh456 Commit message 2
+```
+
+Giữ `pick` ở commit đầu tiên và đổi `pick` của commit sau thành `squash` hoặc `s`:
+
+```text
+pick abcd123 Commit message 1
+squash efgh456 Commit message 2
+```
+
+Sau đó lưu file và chỉnh sửa commit message nếu Git yêu cầu.
+
+Kiểm tra lại lịch sử commit:
+
+```bash
+git log --oneline
+```
+
+> Không nên rebase các commit đã push lên nhánh dùng chung, vì thao tác này làm thay đổi lịch sử commit.
+
+---
+
+## 2. Ngừng theo dõi một file đã được commit
+
+Xóa file khỏi Git nhưng vẫn giữ file trong máy:
+
+```bash
+git rm --cached <filename>
+```
+
+Thêm file vào `.gitignore`:
+
+```bash
+echo "<filename>" >> .gitignore
+```
+
+Sau đó commit thay đổi:
+
+```bash
+git add .gitignore
+git commit -m "Stop tracking <filename>"
+```
+
+Nếu cần bỏ theo dõi cả thư mục:
+
+```bash
+git rm -r --cached <folder>
+```
+
+---
+
+## 3. Đổi tên branch
+
+Đổi tên branch hiện tại:
+
+```bash
+git branch -m <tên_branch_mới>
+```
+
+Ví dụ:
+
+```bash
+git branch -m feature/login
+```
+
+Đổi tên một branch khác:
+
+```bash
+git branch -m <tên_branch_cũ> <tên_branch_mới>
+```
+
+Nếu branch cũ đã được push lên remote:
+
+```bash
+git push origin -u <tên_branch_mới>
+git push origin --delete <tên_branch_cũ>
+```
+
+---
+
+## 4. Commit nhầm sang branch khác
+
+Giả sử đang ở `branch-old` và vừa commit nhầm một commit.
+
+### Bước 1: Tạo branch mới tại commit hiện tại
+
+```bash
+git branch branch-new
+```
+
+Branch `branch-new` sẽ trỏ tới commit vừa tạo.
+
+### Bước 2: Xóa commit khỏi branch hiện tại
+
+```bash
+git reset --hard HEAD~1
+```
+
+### Bước 3: Chuyển sang branch mới
+
+```bash
+git switch branch-new
+```
+
+Hoặc:
+
+```bash
+git checkout branch-new
+```
+
+Kiểm tra lại:
+
+```bash
+git log --oneline
+```
+
+> Không dùng `git reset --hard` nếu còn thay đổi chưa commit muốn giữ.
+
+---
+
+## 5. Xóa hoặc hoàn tác commit
+
+### Cách 1: Xóa commit nhưng giữ thay đổi trong staging
+
+```bash
+git reset --soft HEAD~<số_commit>
+```
+
+Ví dụ:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Commit bị xóa khỏi lịch sử, nhưng toàn bộ thay đổi vẫn nằm trong staging area.
+
+Kiểm tra:
+
+```bash
+git status
+```
+
+---
+
+### Cách 2: Xóa commit và đưa thay đổi ra khỏi staging
+
+```bash
+git reset HEAD~<số_commit>
+```
+
+Hoặc viết rõ chế độ mặc định:
+
+```bash
+git reset --mixed HEAD~<số_commit>
+```
+
+Thay đổi vẫn còn trong thư mục làm việc nhưng không còn nằm trong staging area.
+
+Ví dụ:
+
+```bash
+git reset HEAD~1
+```
+
+---
+
+### Cách 3: Xóa commit và xóa toàn bộ thay đổi
+
+```bash
+git reset --hard HEAD~<số_commit>
+```
+
+Ví dụ:
+
+```bash
+git reset --hard HEAD~1
+```
+
+Lệnh này xóa commit, staging và thay đổi trong thư mục làm việc.
+
+> Đây là thao tác nguy hiểm vì có thể làm mất dữ liệu chưa được lưu.
+
+---
+
+### Cách 4: Hoàn tác commit bằng một commit mới
+
+```bash
+git revert <commit-hash>
+```
+
+Ví dụ:
+
+```bash
+git revert abcd123
+```
+
+`git revert` không xóa commit cũ. Git tạo một commit mới để đảo ngược thay đổi của commit được chọn.
+
+Cách này phù hợp hơn khi commit đã được push lên remote hoặc đang nằm trên nhánh dùng chung.
+
+---
+
+## 6. Lấy một commit từ branch khác
+
+Sử dụng `cherry-pick`:
+
+```bash
+git cherry-pick <commit-hash>
+```
+
+Ví dụ:
+
+```bash
+git cherry-pick abcd123
+```
+
+Lệnh này lấy nội dung thay đổi của commit được chọn và tạo một commit tương ứng trên branch hiện tại.
+
+Nếu xảy ra conflict:
+
+```bash
+git status
+```
+
+Sửa conflict, sau đó chạy:
+
+```bash
+git add .
+git cherry-pick --continue
+```
+
+Hủy quá trình cherry-pick:
+
+```bash
+git cherry-pick --abort
+```
+
+---
+
+## 7. Đang làm dở nhưng muốn chuyển sang branch khác
+
+Lưu tạm cả file đã theo dõi và file chưa được Git theo dõi:
+
+```bash
+git stash push -u -m "Work in progress"
+```
+
+Chuyển sang branch khác:
+
+```bash
+git switch <branch-khác>
+```
+
+Hoặc tạo branch mới:
+
+```bash
+git switch -c branch-new
+```
+
+Sau khi xử lý xong, quay lại branch cũ:
+
+```bash
+git switch branch-old
+```
+
+Khôi phục thay đổi đã stash:
+
+```bash
+git stash pop
+```
+
+Xem danh sách stash:
+
+```bash
+git stash list
+```
+
+Khôi phục một stash cụ thể mà chưa xóa stash đó:
+
+```bash
+git stash apply stash@{0}
+```
+
+> Không cần chạy `git add` và `git commit` ngay sau khi chuyển branch, trừ khi muốn commit thay đổi trên branch đó.
+
+---
+
+## 8. Khôi phục commit đã xóa nhầm
+
+Xem lịch sử các thao tác làm thay đổi `HEAD`:
+
+```bash
+git reflog
+```
+
+Ví dụ kết quả:
+
+```text
+abcd123 HEAD@{0}: reset: moving to HEAD~1
+efgh456 HEAD@{1}: commit: Important commit
+```
+
+Khôi phục repository về commit cần lấy lại:
+
+```bash
+git reset --hard efgh456
+```
+
+Cách an toàn hơn là tạo một branch mới từ commit đó:
+
+```bash
+git branch recovered-branch efgh456
+git switch recovered-branch
+```
+
+Kiểm tra lại:
+
+```bash
+git log --oneline
+```
+
+---
+
+## 9. Undo một lần merge
+
+Nếu vừa chạy `git merge` và chưa thực hiện thêm thao tác quan trọng nào:
+
+```bash
+git reset --hard ORIG_HEAD
+```
+
+`ORIG_HEAD` thường trỏ tới commit ngay trước khi merge.
+
+Nếu merge đang xảy ra conflict và chưa hoàn tất:
+
+```bash
+git merge --abort
+```
+
+Nếu merge commit đã được push lên remote hoặc nằm trên nhánh dùng chung, không nên dùng `reset`. Hãy hoàn tác merge bằng:
+
+```bash
+git revert -m 1 <merge-commit-hash>
+```
+
+Trong đó:
+
+* `-m 1` giữ parent thứ nhất làm nhánh chính.
+* Git tạo một commit mới để đảo ngược kết quả merge.
+
+---
+
+## 10. Một số lệnh kiểm tra hữu ích
+
+Xem trạng thái repository:
+
+```bash
+git status
+```
+
+Xem lịch sử commit ngắn gọn:
+
+```bash
+git log --oneline
+```
+
+Xem lịch sử dưới dạng sơ đồ:
+
+```bash
+git log --oneline --graph --decorate --all
+```
+
+Xem các branch:
+
+```bash
+git branch
+```
+
+Xem cả branch local và remote:
+
+```bash
+git branch -a
+```
+
+Xem thay đổi chưa được đưa vào staging:
+
+```bash
+git diff
+```
+
+Xem thay đổi đang nằm trong staging:
+
+```bash
+git diff --staged
+```
