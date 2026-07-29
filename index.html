@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bản thực hành dựng lại trang chủ Sun* bằng HTML, CSS và JavaScript thuần."
+    />
+    <title>Trang chủ - Sun* Inc.</title>
+    <link rel="icon" href="./assets/images/common/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script src="./assets/js/main.js" defer></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Đi đến nội dung chính</a>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="logo" href="#home" aria-label="Sun* - Trang chủ">
+          <img
+            src="./assets/images/common/logo-sun.png"
+            alt="Sun Asterisk"
+            width="121"
+            height="40"
+          />
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          aria-label="Mở menu"
+          data-menu-toggle
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav
+          class="primary-navigation"
+          id="primary-navigation"
+          aria-label="Điều hướng chính"
+          data-navigation
+        >
+          <a class="nav-link is-active" href="#home">Trang chủ</a>
+          <a class="nav-link" href="#business">Về chúng tôi</a>
+          <a class="nav-link" href="#projects">Dự án</a>
+          <a class="nav-link" href="#careers">Cơ hội nghề nghiệp</a>
+          <a class="nav-link" href="#environment">Môi trường làm việc</a>
+          <a class="nav-link" href="#news">Tin tức</a>
+        </nav>
+
+        <div class="language-switcher" aria-label="Chọn ngôn ngữ">
+          <button class="language is-active" type="button" aria-pressed="true">
+            VI
+          </button>
+          <button class="language" type="button" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="home" aria-label="Sun Asterisk introduction">
+        <video
+          class="hero-video hero-video-desktop"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Make awesome things that matter"
+        >
+          <source
+            src="https://sun-asterisk.vn/wp-content/uploads/2020/11/mv-pc.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        <video
+          class="hero-video hero-video-mobile"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="Make awesome things that matter"
+        >
+          <source
+            src="https://sun-asterisk.vn/wp-content/uploads/2020/11/mv-sp.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        <p class="video-fallback">
+          Make awesome things that matter.
+          <span>Creative × Business × Tech</span>
+        </p>
+      </section>
+
+      <section class="section business" id="business" aria-labelledby="business-title">
+        <div class="container">
+          <h1 class="section-title" id="business-title">Lĩnh vực kinh doanh</h1>
+
+          <div class="business-overview">
+            <div class="business-copy">
+              <p>
+                Là một Digital Creative Studio, Sun* luôn đề cao tinh thần làm
+                chủ sản phẩm, tư duy sáng tạo trong mỗi dự án để mang đến những
+                trải nghiệm <strong>"Awesome"</strong> nhất cho end-user.
+              </p>
+              <p>
+                Với hai dòng dịch vụ là
+                <strong>"Creative &amp; Engineering"</strong> và
+                <strong>"Talent Platform"</strong>, Sun* đã và đang từng bước
+                cùng công nghệ tạo ra những giá trị tốt đẹp cho xã hội.
+              </p>
+            </div>
+
+            <img
+              class="business-image"
+              src="./assets/images/business/intro-business.png"
+              alt="Minh họa các lĩnh vực kinh doanh của Sun Asterisk"
+              width="644"
+              height="509"
+            />
+          </div>
+
+          <div class="service-grid">
+            <article class="service-card service-card-red">
+              <span class="decor-dot decor-dot-service" aria-hidden="true"></span>
+              <p class="service-label">Digital Creative Studio</p>
+              <h2>Creative<br />&amp; Engineering</h2>
+              <p>
+                Đội ngũ nhân lực dồi dào chuyên về công nghệ, thiết kế và kinh
+                doanh.
+              </p>
+              <a class="large-button large-button-light" href="#">
+                Tìm hiểu thêm <span class="arrow-circle" aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="service-card service-card-white">
+              <p class="service-label">Digital Creative Studio</p>
+              <h2>Talent<br />Platform</h2>
+              <p>
+                Các giải pháp nguồn nhân lực hỗ trợ tăng trưởng kinh doanh bền
+                vững.
+              </p>
+              <a class="large-button large-button-dark" href="#">
+                Tìm hiểu thêm <span class="arrow-circle" aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section projects" id="projects" aria-labelledby="projects-title">
+        <span class="decor-dot projects-dot" aria-hidden="true"></span>
+        <div class="container project-layout">
+          <div class="project-summary">
+            <h2 class="section-title" id="projects-title">Dự án của chúng tôi</h2>
+
+            <dl class="stats-list">
+              <div class="stat-item">
+                <dt>
+                  <span data-counter="200" data-step="10" data-duration="3000">
+                    200
+                  </span>
+                  <sup>++</sup>
+                </dt>
+                <dd>Đối tác</dd>
+              </div>
+              <div class="stat-item">
+                <dt>
+                  <span data-counter="300" data-step="20" data-duration="3000">
+                    300
+                  </span>
+                  <sup>++</sup>
+                </dt>
+                <dd>Dịch vụ được hỗ trợ</dd>
+              </div>
+            </dl>
+
+            <a class="large-button large-button-dark project-all-button" href="#">
+              Xem tất cả dự án
+              <span class="arrow-circle" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="project-showcase">
+            <article class="project-card" data-project-card>
+              <img
+                class="project-image"
+                src="./assets/images/projects/ssk.png"
+                alt="Giao diện dự án SSK"
+                width="365"
+                height="532"
+                loading="lazy"
+                data-project-image
+              />
+              <div class="project-card-content">
+                <p class="project-client" data-project-client>Công ty TNHH SSK</p>
+                <h3 data-project-title>Dự án SSK</h3>
+                <p data-project-description>
+                  Thử thách để tiếp thêm năng lượng cho mọi người và xã hội với
+                  sports data.
+                </p>
+                <a class="detail-link" href="#">
+                  Xem chi tiết
+                  <span class="arrow-circle" aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+
+            <div class="slider-controls" aria-label="Điều khiển dự án">
+              <button type="button" aria-label="Dự án trước" data-project-prev>‹</button>
+              <button type="button" aria-label="Dự án tiếp theo" data-project-next>›</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="careers" id="careers" aria-labelledby="careers-title">
+        <img
+          class="careers-background"
+          src="./assets/images/careers/career-bg.jpg"
+          alt=""
+          width="1108"
+          height="627"
+          loading="lazy"
+        />
+        <div class="careers-overlay"></div>
+
+        <div class="careers-content">
+          <p class="careers-brand">Sun Asterisk</p>
+          <h2 id="careers-title">Cơ hội nghề nghiệp</h2>
+          <p class="careers-slogan">
+            Join us &amp; MAKE AWESOME THINGS THAT MATTER.
+          </p>
+          <p>
+            Sun* luôn tìm kiếm những con người đam mê thử thách để tạo nên những
+            giá trị "Awesome".
+          </p>
+          <p>Cùng trở thành một phần của Sun* ngay hôm nay.</p>
+          <a class="large-button large-button-light careers-button" href="#">
+            Gia nhập đội ngũ Sun*
+            <span class="arrow-circle" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section
+        class="section environment"
+        id="environment"
+        aria-labelledby="environment-title"
+      >
+        <div class="container environment-layout">
+          <div class="environment-copy">
+            <h2 class="section-title" id="environment-title">
+              Môi trường làm việc
+            </h2>
+            <ul class="value-list">
+              <li>
+                <span class="checkmark" aria-hidden="true">✓</span>
+                <span>
+                  #ActiveChallenge: Chủ động tạo ra công việc thử thách liên tục
+                  cho bản thân.
+                </span>
+              </li>
+              <li>
+                <span class="checkmark" aria-hidden="true">✓</span>
+                <span>
+                  #ActiveLearn: Học tập trong một tổ chức có đầy đủ các thành tố:
+                  môi trường học tập, cơ hội học tập, năng lực học tập.
+                </span>
+              </li>
+              <li>
+                <span class="checkmark" aria-hidden="true">✓</span>
+                <span>
+                  #ActiveJoy: Sống trong môi trường văn hóa hướng tới giá trị
+                  nhân văn, và hạnh phúc cho mọi người.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="environment-visual">
+            <img
+              class="environment-image"
+              src="./assets/images/environment/human-centered.png"
+              alt="Các thành viên Sun Asterisk chủ động học hỏi và thử thách"
+              width="1100"
+              height="882"
+              loading="lazy"
+            />
+            <a class="large-button large-button-dark environment-button" href="#">
+              Xem chi tiết
+              <span class="arrow-circle" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section news" id="news" aria-labelledby="news-title">
+        <div class="container">
+          <div class="news-header">
+            <h2 class="section-title" id="news-title">Văn hóa - Sự kiện</h2>
+            <div class="slider-controls" aria-label="Điều khiển tin tức">
+              <button type="button" aria-label="Tin trước" data-news-prev>‹</button>
+              <button type="button" aria-label="Tin tiếp theo" data-news-next>›</button>
+            </div>
+          </div>
+
+          <div class="news-track" data-news-track>
+            <article class="news-card">
+              <img
+                class="news-image"
+                src="./assets/images/news/learning-culture.png"
+                alt="Sun Asterisk Learning Culture"
+                width="440"
+                height="248"
+                loading="lazy"
+              />
+              <h3>
+                6 tháng cùng chiến lược “Toàn Sun* học tập và thực hành liên
+                tục", chúng ta đã có những kết quả như thế nào?
+              </h3>
+              <p>
+                Để nuôi dưỡng và phát triển mạnh mẽ văn hóa học tập, từ đó trở
+                thành "Tổ chức học tập"...
+              </p>
+              <a class="detail-link" href="#">
+                Xem chi tiết
+                <span class="arrow-circle" aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="news-card">
+              <img
+                class="news-image"
+                src="./assets/images/news/server-k8s.jpg"
+                alt="Đội ngũ phát triển server Kubernetes"
+                width="440"
+                height="248"
+                loading="lazy"
+              />
+              <h3>
+                "Trình làng" server K8S cho các CEV thỏa sức thực hiện dự án nội
+                bộ
+              </h3>
+              <p>
+                Chỉ trong vòng 2 tháng, team dự án server K8S của IFU đã release
+                thành công...
+              </p>
+              <a class="detail-link" href="#">
+                Xem chi tiết
+                <span class="arrow-circle" aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="news-card">
+              <img
+                class="news-image"
+                src="./assets/images/news/cka-2024.png"
+                alt="Kinh nghiệm thi chứng chỉ CKA 2024"
+                width="440"
+                height="248"
+                loading="lazy"
+              />
+              <h3>
+                Chinh phục chứng chỉ CKA 2024 cùng Hữu Kim (R&amp;D): "Kịch tính
+                và nhiều kinh nghiệm xương máu"
+              </h3>
+              <p>
+                Sunner Hữu Kim (R&amp;D) vừa trải qua hành trình thi chứng chỉ
+                CKA trong năm 2024...
+              </p>
+              <a class="detail-link" href="#">
+                Xem chi tiết
+                <span class="arrow-circle" aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+
+          <div class="news-more">
+            <a class="large-button large-button-dark" href="#">
+              Xem nhiều tin hơn
+              <span class="arrow-circle" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-navigation">
+        <div class="container footer-grid">
+          <div class="footer-logo-column">
+            <a class="logo footer-logo" href="#home" aria-label="Sun* - Trang chủ">
+              <img
+                src="./assets/images/common/logo-sun.png"
+                alt="Sun Asterisk"
+                width="155"
+                height="51"
+                loading="lazy"
+              />
+            </a>
+          </div>
+
+          <nav aria-label="Chúng tôi là ai">
+            <h2><span aria-hidden="true"></span>Chúng tôi là ai?</h2>
+            <ul>
+              <li><a href="#">Tầm nhìn, sứ mệnh</a></li>
+              <li><a href="#">Giá trị cốt lõi</a></li>
+              <li><a href="#">Ý nghĩa tên Sun*</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-label="Chúng tôi làm gì">
+            <h2><span aria-hidden="true"></span>Chúng tôi làm gì?</h2>
+            <ul>
+              <li><a href="#">Creative &amp; Engineering</a></li>
+              <li><a href="#">Talent Platform</a></li>
+              <li><a href="#">Dự án của chúng tôi</a></li>
+            </ul>
+          </nav>
+
+          <nav aria-label="Cập nhật tin tức">
+            <h2><span aria-hidden="true"></span>Cập nhật tin tức</h2>
+            <ul>
+              <li><a href="#">Văn hóa - Sự kiện</a></li>
+              <li><a href="#">Tuyển dụng</a></li>
+              <li><a href="#">Chính sách phúc lợi</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-offices">
+        <div class="container offices-grid">
+          <div class="footer-office-spacer" aria-hidden="true"></div>
+
+          <div class="footer-contact">
+            <h2><span aria-hidden="true"></span>Liên hệ</h2>
+            <address>
+              <a href="tel:+842437955417">SĐT: 84-24-3795-5417</a>
+              <a href="mailto:hr@sun-asterisk.com">
+                Email: hr@sun-asterisk.com
+              </a>
+            </address>
+          </div>
+
+          <div class="footer-office">
+            <h2><span aria-hidden="true"></span>Văn phòng</h2>
+            <p>
+              T13 Keangnam Hanoi Landmark Tower, khu E6 khu ĐTM Cầu Giấy,
+              Phường Yên Hòa, Thành phố Hà Nội, Việt Nam.
+            </p>
+            <p>
+              Tầng 4, 16 Lý Thường Kiệt, Phường Hải Châu, Thành phố Đà Nẵng,
+              Việt Nam.
+            </p>
+            <p>
+              Tầng 9 và Tầng 10, L’Mak Long Tower, số 101-103 Nguyễn Cửu Vân,
+              Phường Gia Định, Thành phố Hồ Chí Minh, Việt Nam.
+            </p>
+            <p>Văn phòng Tokyo - Văn phòng Cebu - Văn phòng Phnom Penh</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-divider" aria-hidden="true"></div>
+
+      <div class="footer-legal">
+        <div class="container legal-layout">
+          <img
+            class="mascot-image"
+            src="./assets/images/common/bear-footer@2x.png"
+            alt=""
+            width="48"
+            height="48"
+            loading="lazy"
+          />
+          <div class="legal-copy">
+            <p>@ 2021 Sun-asterisk. All rights reserved.</p>
+            <p>
+              Giấy chứng nhận ĐKDN: 0106045931 do Sở KHĐT TP Hà Nội cấp lần đầu
+              ngày 29/10/2012
+            </p>
+            <p>
+              Giấy phép hoạt động DVVL: 03/2022 do Sở LĐTBXH TP Hà Nội cấp lần
+              đầu ngày 10/01/2022
+            </p>
+            <p>
+              Người đại diện theo pháp luật: KOBAYASHI TAIHEI - Tổng giám đốc
+            </p>
+          </div>
+
+          <div class="social-links" aria-label="Mạng xã hội">
+            <a href="#" aria-label="YouTube">▶</a>
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a class="sun-news" href="#">SUNNEWS*</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <button
+      class="back-to-top"
+      type="button"
+      aria-label="Lên đầu trang"
+      data-back-to-top
+    >
+      ↑
+    </button>
+  </body>
+</html>
