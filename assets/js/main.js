@@ -162,11 +162,134 @@ document
 document
   .querySelector("[data-news-next]")
   ?.addEventListener("click", () => scrollNews(1));
+let newsAutoTimer = null;
+let isNewsAnimating = false;
 
+const autoSlideNews = async () => {
+  if (!newsTrack || isNewsAnimating) return;
+
+  /*
+   * Mobile: dùng cuộn ngang có sẵn.
+   * Khi đến cuối thì quay về đầu.
+   */
+  if (window.innerWidth <= 720) {
+    const firstCard = newsTrack.querySelector(".news-card");
+    if (!firstCard) return;
+
+    const gap =
+      Number.parseFloat(getComputedStyle(newsTrack).columnGap) || 0;
+
+    const distance =
+      firstCard.getBoundingClientRect().width + gap;
+
+    const reachedEnd =
+      newsTrack.scrollLeft + newsTrack.clientWidth >=
+      newsTrack.scrollWidth - 2;
+
+    newsTrack.scrollTo({
+      left: reachedEnd ? 0 : newsTrack.scrollLeft + distance,
+      behavior: "smooth",
+    });
+
+    return;
+  }
+
+  /*
+   * Desktop: sử dụng kỹ thuật FLIP.
+   * Đo vị trí cũ -> đổi DOM -> đo vị trí mới -> animate.
+   */
+  const cards = [...newsTrack.querySelectorAll(".news-card")];
+
+  if (cards.length < 2) return;
+
+  isNewsAnimating = true;
+
+  // Ghi lại vị trí cũ
+  const oldPositions = new Map();
+
+  cards.forEach((card) => {
+    oldPositions.set(card, card.getBoundingClientRect());
+  });
+
+  // Đưa tin đầu tiên xuống cuối
+  newsTrack.append(cards[0]);
+
+  // Animation từ vị trí cũ sang vị trí mới
+  const animations = cards.map((card) => {
+    const oldPosition = oldPositions.get(card);
+    const newPosition = card.getBoundingClientRect();
+    const distanceX = oldPosition.left - newPosition.left;
+
+    return card.animate(
+      [
+        {
+          transform: `translateX(${distanceX}px)`,
+        },
+        {
+          transform: "translateX(0)",
+        },
+      ],
+      {
+        duration: 650,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+    );
+  });
+
+  await Promise.all(
+    animations.map((animation) =>
+      animation.finished.catch(() => {}),
+    ),
+  );
+
+  isNewsAnimating = false;
+};
+const stopAutoNews = () => {
+  if (newsAutoTimer !== null) {
+    clearInterval(newsAutoTimer);
+    newsAutoTimer = null;
+  }
+};
+
+const startAutoNews = () => {
+  if (!newsTrack) return;
+
+  stopAutoNews();
+
+  newsAutoTimer = setInterval(() => {
+    autoSlideNews();
+  }, 5000);
+};
+
+newsTrack?.addEventListener("mouseenter", stopAutoNews);
+newsTrack?.addEventListener("mouseleave", startAutoNews);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopAutoNews();
+  } else {
+    startAutoNews();
+  }
+});
+
+
+const counterAnimations = new WeakMap();
 const animateCounter = (counter) => {
+  // Hủy lượt đếm cũ nếu nó vẫn đang chạy
+  const previousAnimation = counterAnimations.get(counter);
+
+  if (previousAnimation) {
+    cancelAnimationFrame(previousAnimation);
+  }
+
   const target = Number(counter.dataset.counter);
   const step = Math.max(1, Number(counter.dataset.step) || 1);
-  const duration = Math.max(0, Number(counter.dataset.duration) || 3000);
+  const duration = Math.max(
+    0,
+    Number(counter.dataset.duration) || 3000,
+  );
+
+  counter.textContent = "0";
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     counter.textContent = target.toLocaleString("vi-VN");
@@ -179,30 +302,41 @@ const animateCounter = (counter) => {
 
   const update = (currentTime) => {
     const elapsed = currentTime - startTime;
+
     const completedSteps = Math.min(
       Math.floor(elapsed / stepDuration),
       totalSteps,
     );
+
     const currentValue = Math.min(completedSteps * step, target);
 
     counter.textContent = currentValue.toLocaleString("vi-VN");
 
-    if (currentValue < target) requestAnimationFrame(update);
+    if (currentValue < target) {
+      const animationId = requestAnimationFrame(update);
+      counterAnimations.set(counter, animationId);
+    } else {
+      counterAnimations.delete(counter);
+    }
   };
 
-  requestAnimationFrame(update);
+  const animationId = requestAnimationFrame(update);
+  counterAnimations.set(counter, animationId);
 };
 
 const counterObserver = new IntersectionObserver(
-  (entries, observer) => {
+  (entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
 
+      // Reset rồi đếm lại mỗi lần số xuất hiện trong màn hình
+      entry.target.textContent = "0";
       animateCounter(entry.target);
-      observer.unobserve(entry.target);
     });
   },
-  { threshold: 0.7 },
+  {
+    threshold: 0.4,
+  },
 );
 
 counters.forEach((counter) => {
@@ -226,3 +360,4 @@ window.addEventListener("resize", () => {
 
 syncHeroVideo();
 updateBackToTop();
+startAutoNews();
