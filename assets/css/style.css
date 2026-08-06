@@ -1113,6 +1113,10 @@ img {
     --header-height: 76px;
   }
 
+  .site-header {
+    backdrop-filter: none;
+  }
+
   .logo img {
     width: 121px;
   }
@@ -1136,16 +1140,26 @@ img {
 
   .primary-navigation {
     position: fixed;
-    inset: var(--header-height) 0 0;
+    z-index: 1;
+    top: var(--header-height);
+    right: 0;
+    bottom: auto;
+    left: 0;
     display: flex;
+    width: 100%;
+    height: calc(100vh - var(--header-height));
+    height: calc(100dvh - var(--header-height));
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    overflow-y: auto;
     flex-direction: column;
     gap: 0;
     background: var(--white);
+    box-shadow: 0 8px 20px rgb(43 52 65 / 8%);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    overscroll-behavior: contain;
     transition:
       opacity 220ms ease,
       visibility 220ms ease;
@@ -1159,9 +1173,16 @@ img {
 
   .nav-link {
     height: auto;
-    padding: 16px 8px;
-    border-bottom: 1px solid #eeeeee;
+    min-height: 62px;
+    padding: 17px 26px;
+    border-bottom: 0;
     font-size: 17px;
+  }
+
+  .nav-link:hover,
+  .nav-link.is-active {
+    color: var(--white);
+    background: var(--red);
   }
 
   .nav-link::before {
