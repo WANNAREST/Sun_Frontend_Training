@@ -471,7 +471,7 @@ const animateCounter = (counter) => {
   counter.textContent = "0";
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    counter.textContent = target.toLocaleString("vi-VN");
+    counter.textContent = String(target);
     return;
   }
 
@@ -489,7 +489,7 @@ const animateCounter = (counter) => {
 
     const currentValue = Math.min(completedSteps * step, target);
 
-    counter.textContent = currentValue.toLocaleString("vi-VN");
+    counter.textContent = String(currentValue);
 
     if (currentValue < target) {
       const animationId = requestAnimationFrame(update);
